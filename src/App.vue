@@ -1,19 +1,22 @@
 <template>
-  <div class="dashboard">
-    <header>
-      <h1>Vending Machine Dashboard</h1>
-    </header>
-    <main>
-      <div class="grid">
-        <OverviewCards :data="overview" />
-        <SalesIndexChart :data="salesIndex" />
-        <ProductFill :data="productFill" />
-        <MoneyFill :data="moneyFill" />
-        <SalesByMachine :data="salesByMachine" />
-        <SalesByProduct :data="salesByProduct" />
-        <PeakSalesTimes :data="peakTimes" />
+  <div class="app-layout">
+    <SidebarMenu />
+    <div class="main-content">
+      <AppHeader />
+      <div class="content-wrapper">
+        <MapPlaceholder />
+        <HorizontalNav />
+        <div class="dashboard-grid">
+          <OverviewCards :data="overview" />
+          <SalesIndexChart :data="salesIndex" />
+          <ProductFill :data="productFill" />
+          <MoneyFill :data="moneyFill" />
+          <SalesByMachine :data="salesByMachine" />
+          <SalesByProduct :data="salesByProduct" />
+          <PeakSalesTimes :data="peakTimes" />
+        </div>
       </div>
-    </main>
+    </div>
   </div>
 </template>
 
@@ -30,6 +33,13 @@ import type {
   PeakSaleTimeAtDay
 } from './types'
 
+// Layout components
+import SidebarMenu from './components/layout/SidebarMenu.vue'
+import AppHeader from './components/layout/AppHeader.vue'
+import MapPlaceholder from './components/layout/MapPlaceholder.vue'
+import HorizontalNav from './components/layout/HorizontalNav.vue'
+
+// Dashboard components
 import OverviewCards from './components/OverviewCards.vue'
 import SalesIndexChart from './components/SalesIndexChart.vue'
 import ProductFill from './components/ProductFill.vue'
@@ -80,21 +90,23 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.dashboard {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  padding: 2rem;
-  background: #f3f4f6;
+.app-layout {
+  display: flex;
   min-height: 100vh;
 }
-header h1 {
-  margin-bottom: 2rem;
-  color: #111827;
-  font-size: 2rem;
-  font-weight: 600;
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f4f6;
 }
-.grid {
+.content-wrapper {
+  padding: 1.5rem 2rem;
+}
+.dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 1.5rem;
+  margin-top: 1.5rem;
 }
 </style>
