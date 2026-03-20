@@ -1,21 +1,20 @@
 <template>
   <div class="card">
-    <h2>Sales by Product</h2>
+    <h2>Sales by Machine</h2>
     <div v-if="data" class="content">
       <div class="totals">
-        <div>Total sold: {{ data.totalSold }}</div>
+        <div>Total sales: {{ data.totalSales }}</div>
         <div>Sold in top 5: {{ data.soldInTopFive }}</div>
-        <div>Categories: {{ data.differentProductCategoriesCount }}</div>
       </div>
       <table class="table">
         <thead>
-        <tr><th>Product ID</th><th>Sold</th><th>% of total</th></tr>
+        <tr><th>Machine</th><th>Sales</th><th>% of total</th></tr>
         </thead>
         <tbody>
-        <tr v-for="product in data.topProducts" :key="product.productId">
-          <td>{{ product.productId }}</td>
-          <td>{{ product.soldTotal }}</td>
-          <td>{{ product.percentageOfAllSales }}%</td>
+        <tr v-for="(machine, idx) in data.topVendingMachines" :key="idx">
+          <td>#{{ idx + 1 }}</td>
+          <td>{{ machine.totalSales }}</td>
+          <td>{{ machine.percentageOfAllSales }}%</td>
         </tr>
         </tbody>
       </table>
@@ -25,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import type { ProductsTotalSalesOverview } from '../types'
+import type { VendingMachinesTotalSalesOverview } from '../../types/'
 
 defineProps<{
-  data: ProductsTotalSalesOverview | null
+  data: VendingMachinesTotalSalesOverview | null
 }>()
 </script>
 
@@ -47,8 +46,7 @@ h2 {
 }
 .totals {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  justify-content: space-between;
   margin-bottom: 1rem;
   font-size: 0.95rem;
   color: #374151;

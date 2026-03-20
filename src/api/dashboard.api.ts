@@ -5,18 +5,22 @@ import type {
     VendingMachineMoneyStatus,
     VendingMachinesTotalSalesOverview,
     ProductsTotalSalesOverview,
-    PeakSaleTimeAtDay
-} from './types'
+    PeakSaleTimeAtDay,
+} from '../types'
 
-const API_BASE = '/api' // will be proxied
+const API_BASE = '/api'
 
 async function fetchJson<T>(url: string): Promise<T> {
     const response = await fetch(`${API_BASE}${url}`)
-    if (!response.ok) throw new Error(`HTTP error ${response.status}`)
-    return response.json()
+
+    if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`)
+    }
+
+    return response.json() as Promise<T>
 }
 
-export const api = {
+export const dashboardApi = {
     getMachinesOverview: () =>
         fetchJson<VendingMachinesOverview>('/machines/overview'),
 
@@ -36,5 +40,5 @@ export const api = {
         fetchJson<ProductsTotalSalesOverview>('/sales/by-product-type'),
 
     getPeakSalesTimes: () =>
-        fetchJson<PeakSaleTimeAtDay[]>('/sales/peak-sale-count-per-day')
+        fetchJson<PeakSaleTimeAtDay[]>('/sales/peak-sale-count-per-day'),
 }

@@ -1,0 +1,92 @@
+:root {
+    /* Typography */
+    --font-family-base:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Oxygen,
+            Ubuntu,
+            Cantarell,
+            "Helvetica Neue",
+            sans-serif;
+
+    --font-size-xs: 12px;
+    --font-size-sm: 13px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 28px;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --line-height-tight: 1.2;
+    --line-height-base: 1.4;
+    --line-height-relaxed: 1.6;
+
+    /* Colors */
+    --color-bg-app: #f5f6fa;
+    --color-bg-surface: #ffffff;
+    --color-bg-surface-muted: #f8f9fc;
+    --color-bg-sidebar: #ffffff;
+    --color-bg-hover: #f1f3f9;
+
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #6b7280;
+    --color-text-muted: #9ca3af;
+    --color-text-inverse: #ffffff;
+
+    --color-border: #e5e7eb;
+    --color-border-strong: #d7dce5;
+
+    --color-accent: #d51f4a;
+    --color-accent-hover: #bc183f;
+    --color-accent-soft: #fce8ee;
+
+    --color-success: #20b26b;
+    --color-warning: #f59e0b;
+    --color-danger: #d14343;
+    --color-info: #4f7cff;
+
+    --color-chart-dark: #5c667a;
+    --color-chart-mid: #9aa3b2;
+    --color-chart-light: #d8dde6;
+
+    /* Layout */
+    --sidebar-width: 256px;
+    --topbar-height: 72px;
+    --content-max-width: 1440px;
+
+    /* Spacing */
+    --space-2xs: 4px;
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 20px;
+    --space-xl: 24px;
+    --space-2xl: 32px;
+
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-pill: 999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.06);
+
+    /* Transitions */
+    --transition-base: 0.2s ease;
+
+    /* Z-index */
+    --z-sidebar: 20;
+    --z-topbar: 30;
+    --z-dropdown: 40;
+    --z-modal: 50;
+}
