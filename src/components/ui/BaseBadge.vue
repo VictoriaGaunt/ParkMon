@@ -56,9 +56,9 @@ withDefaults(
 
 .base-badge--default,
 .base-badge--neutral {
-  background: #eef1f6;
+  background: #e9edf3;
   color: #8d96a8;
-  border-color: #e2e7ef;
+  border-color: #dfe5ee;
 }
 
 .base-badge--success {

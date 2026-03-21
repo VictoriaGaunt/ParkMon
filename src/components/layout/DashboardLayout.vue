@@ -22,13 +22,13 @@
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
-  background: var(--color-bg-app);
+  background: #e9edf3;
 }
 
 .dashboard-layout__sidebar {
-  width: 370px;
-  min-width: 370px;
-  flex: 0 0 370px;
+  width: auto;
+  min-width: 82px;
+  flex: 0 0 auto;
 }
 
 .dashboard-layout__main {
@@ -39,27 +39,38 @@
 }
 
 .dashboard-layout__topbar {
-  background: var(--color-bg-surface);
+  background: #f6f8fb;
 }
 
 .dashboard-layout__content {
   flex: 1;
-  padding: 20px;
+  min-width: 0;
+  padding: 22px;
+}
+
+@media (max-width: 1400px) {
+  .dashboard-layout__content {
+    padding: 18px;
+  }
 }
 
 @media (max-width: 1100px) {
-  .dashboard-layout {
-    flex-direction: column;
-  }
-
   .dashboard-layout__sidebar {
-    width: 100%;
-    min-width: 0;
-    flex-basis: auto;
+    min-width: 74px;
   }
 
   .dashboard-layout__content {
     padding: 16px;
+  }
+}
+
+@media (max-width: 820px) {
+  .dashboard-layout {
+    flex-direction: row;
+  }
+
+  .dashboard-layout__content {
+    padding: 14px;
   }
 }
 </style>

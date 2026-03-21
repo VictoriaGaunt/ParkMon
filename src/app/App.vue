@@ -53,11 +53,6 @@
               v-if="salesByProduct"
               :data="salesByProduct"
           />
-
-          <ProductsCategoriesCard
-              v-if="salesByProduct"
-              :data="salesByProduct"
-          />
         </div>
       </section>
 
@@ -99,7 +94,6 @@ import MoneyFill from '../components/dashboard/MoneyFill.vue'
 import OverviewCards from '../components/dashboard/OverviewCards.vue'
 import PeakSalesTimes from '../components/dashboard/PeakSalesTimes.vue'
 import ProductFill from '../components/dashboard/ProductFill.vue'
-import ProductsCategoriesCard from '../components/dashboard/ProductsCategoriesCard.vue'
 import SalesByMachine from '../components/dashboard/SalesByMachine.vue'
 import SalesByProduct from '../components/dashboard/SalesByProduct.vue'
 import SalesIndexChart from '../components/dashboard/SalesIndexChart.vue'
@@ -181,7 +175,7 @@ onMounted(() => {
 
 .dashboard-section__title {
   margin: 0;
-  color: #a3acbc;
+  color: #546179;
   font-size: 18px;
   line-height: 1.3;
   font-weight: 700;
@@ -201,7 +195,7 @@ onMounted(() => {
   border: 1px solid var(--color-border);
   border-radius: 16px;
   background: var(--color-bg-surface);
-  color: #98a1b2;
+  color: #fafafb;
   font-size: 14px;
   font-weight: 500;
 }

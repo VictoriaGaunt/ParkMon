@@ -53,7 +53,7 @@
     <template #footer>
       <button class="product-fill-card__report-link" type="button">
         <span>Перейти в отчет</span>
-        <img src="/img00.svg" alt="" />
+        <img :src="icons.arrow" alt="arrow" />
       </button>
     </template>
   </BaseCard>
@@ -64,6 +64,16 @@ import { computed } from 'vue'
 import BaseCard from '../ui/BaseCard.vue'
 import type { VendingMachinesItemFillOverview } from '../../types'
 import { formatNumber, formatPercent } from '../../utils'
+
+const base = import.meta.env.BASE_URL
+
+function asset(name: string): string {
+  return `${base}${name}`
+}
+
+const icons = {
+  arrow: asset('img18.png'),
+} as const
 
 const props = defineProps<{
   data: VendingMachinesItemFillOverview
@@ -117,6 +127,14 @@ function showInnerValue(index: number): boolean {
   background: #fafafb;
 }
 
+.product-fill-card__report-link {
+  cursor: pointer;
+  transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease;
+}
+
 .product-fill-card__chart {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -136,10 +154,10 @@ function showInnerValue(index: number): boolean {
 
 .product-fill-card__top-percent {
   align-self: flex-end;
-  color: #a4acba;
+  color: #8f99ab;
   font-size: 13px;
   line-height: 1;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .product-fill-card__column-track {
@@ -179,7 +197,7 @@ function showInnerValue(index: number): boolean {
   padding: 0 8px;
   border-radius: 8px;
   background: #ffffff;
-  color: #3b4354;
+  color: #2f384c;
   font-size: 12px;
   line-height: 1;
   font-weight: 700;
@@ -197,7 +215,7 @@ function showInnerValue(index: number): boolean {
 }
 
 .product-fill-card__total {
-  color: #3b4354;
+  color: #2f384c;
   font-size: 28px;
   line-height: 1;
   font-weight: 700;
@@ -206,9 +224,10 @@ function showInnerValue(index: number): boolean {
 
 .product-fill-card__subtitle {
   margin-top: 10px;
-  color: #a0a8b8;
+  color: #8f99ab;
   font-size: 14px;
   line-height: 1.35;
+  font-weight: 500;
 }
 
 .product-fill-card__summary-side {
@@ -220,7 +239,7 @@ function showInnerValue(index: number): boolean {
   justify-content: center;
   border-radius: 8px;
   background: #eef1f6;
-  color: #a0a8b8;
+  color: #8f99ab;
   font-size: 13px;
   line-height: 1;
   font-weight: 600;
@@ -228,12 +247,19 @@ function showInnerValue(index: number): boolean {
 
 .product-fill-card__report-link {
   width: 100%;
+  min-height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #98a1b2;
+  padding: 0 8px;
+  border-radius: 10px;
+  color: #8f99ab;
   font-size: 14px;
   font-weight: 500;
+}
+
+.product-fill-card__report-link:hover {
+  background: #e9edf3;
 }
 
 .product-fill-card__report-link img {

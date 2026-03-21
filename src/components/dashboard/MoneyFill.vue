@@ -7,7 +7,7 @@
   >
     <div class="money-fill-card__filter">
       <button class="money-fill-card__filter-btn" type="button">
-        <img src="/img00.svg" alt="" />
+        <img :src="icons.filter" alt="filter" />
         <span>Сначала полные ТА</span>
       </button>
     </div>
@@ -23,31 +23,37 @@
           <span class="money-fill-card__id"># {{ item.machineId }}</span>
         </div>
 
-        <div class="money-fill-card__bars">
-          <div class="money-fill-card__bar-group">
-            <img class="money-fill-card__bar-icon" src="/img00.svg" alt="" />
-            <div class="money-fill-card__progress">
-              <div
-                  class="money-fill-card__progress-bar money-fill-card__progress-bar--orange"
-                  :style="{ width: `${clampPercent(item.coinFillPercentage)}%` }"
-              ></div>
-            </div>
+        <div class="money-fill-card__metric">
+          <div class="money-fill-card__metric-top">
+            <img class="money-fill-card__metric-icon" :src="icons.coins" alt="coins" />
             <span class="money-fill-card__percent">
               {{ formatPercent(item.coinFillPercentage) }}
             </span>
           </div>
 
-          <div class="money-fill-card__bar-group">
-            <img class="money-fill-card__bar-icon" src="/img00.svg" alt="" />
-            <div class="money-fill-card__progress">
-              <div
-                  class="money-fill-card__progress-bar money-fill-card__progress-bar--green"
-                  :style="{ width: `${clampPercent(item.banknotesFillPercentage)}%` }"
-              ></div>
-            </div>
+          <div class="money-fill-card__progress">
+            <div
+                class="money-fill-card__progress-bar"
+                :class="`money-fill-card__progress-bar--${getMetricVariant(item.machineType, item.coinFillPercentage)}`"
+                :style="{ width: `${clampPercent(item.coinFillPercentage)}%` }"
+            ></div>
+          </div>
+        </div>
+
+        <div class="money-fill-card__metric">
+          <div class="money-fill-card__metric-top">
+            <img class="money-fill-card__metric-icon" :src="icons.banknotes" alt="banknotes" />
             <span class="money-fill-card__percent">
               {{ formatPercent(item.banknotesFillPercentage) }}
             </span>
+          </div>
+
+          <div class="money-fill-card__progress">
+            <div
+                class="money-fill-card__progress-bar"
+                :class="`money-fill-card__progress-bar--${getMetricVariant(item.machineType, item.banknotesFillPercentage)}`"
+                :style="{ width: `${clampPercent(item.banknotesFillPercentage)}%` }"
+            ></div>
           </div>
         </div>
       </div>
@@ -56,7 +62,7 @@
     <template #footer>
       <button class="money-fill-card__report-link" type="button">
         <span>Перейти в отчет</span>
-        <img src="/img00.svg" alt="" />
+        <img :src="icons.arrow" alt="arrow" />
       </button>
     </template>
   </BaseCard>
@@ -67,6 +73,19 @@ import { computed } from 'vue'
 import BaseCard from '../ui/BaseCard.vue'
 import type { VendingMachineMoneyStatus } from '../../types'
 import { formatPercent } from '../../utils'
+
+const base = import.meta.env.BASE_URL
+
+function asset(name: string): string {
+  return `${base}${name}`
+}
+
+const icons = {
+  filter: asset('img21.png'),
+  coins: asset('img22.png'),
+  banknotes: asset('img23.png'),
+  arrow: asset('img18.png'),
+} as const
 
 const props = defineProps<{
   data: VendingMachineMoneyStatus[]
@@ -93,6 +112,38 @@ function clampPercent(value: number): number {
 
   return value
 }
+
+function getMetricVariant(machineType: string, value: number): 'success' | 'warning' | 'danger' {
+  const type = machineType.toUpperCase()
+
+  if (type === 'B') {
+    if (value <= 49) {
+      return 'success'
+    }
+    if (value <= 89) {
+      return 'warning'
+    }
+    return 'danger'
+  }
+
+  if (type === 'M') {
+    if (value <= 39) {
+      return 'success'
+    }
+    if (value <= 74) {
+      return 'warning'
+    }
+    return 'danger'
+  }
+
+  if (value <= 49) {
+    return 'success'
+  }
+  if (value <= 89) {
+    return 'warning'
+  }
+  return 'danger'
+}
 </script>
 
 <style scoped>
@@ -100,6 +151,15 @@ function clampPercent(value: number): number {
   min-width: 0;
   border-radius: 18px;
   background: #fafafb;
+}
+
+.money-fill-card__filter-btn,
+.money-fill-card__report-link {
+  cursor: pointer;
+  transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease;
 }
 
 .money-fill-card__filter {
@@ -115,9 +175,14 @@ function clampPercent(value: number): number {
   border: 1px solid #edf0f4;
   border-radius: 10px;
   background: #f5f7fa;
-  color: #98a1b2;
+  color: #8f99ab;
   font-size: 14px;
   font-weight: 500;
+}
+
+.money-fill-card__filter-btn:hover {
+  background: #e9edf3;
+  border-color: #d6dbe5;
 }
 
 .money-fill-card__filter-btn img {
@@ -130,14 +195,18 @@ function clampPercent(value: number): number {
 .money-fill-card__list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .money-fill-card__row {
   display: grid;
-  grid-template-columns: 92px 1fr;
-  align-items: center;
-  gap: 14px;
+  grid-template-columns: 118px 1fr 1fr;
+  align-items: start;
+  gap: 12px;
+  min-height: 48px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #f7f8fb;
 }
 
 .money-fill-card__machine {
@@ -145,6 +214,7 @@ function clampPercent(value: number): number {
   align-items: center;
   gap: 8px;
   min-width: 0;
+  padding-top: 2px;
 }
 
 .money-fill-card__type {
@@ -157,30 +227,42 @@ function clampPercent(value: number): number {
 }
 
 .money-fill-card__id {
-  color: #3b4354;
+  color: #2f384c;
   font-size: 15px;
   line-height: 1.2;
-  font-weight: 500;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-.money-fill-card__bars {
+.money-fill-card__metric {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
-.money-fill-card__bar-group {
-  display: grid;
-  grid-template-columns: 14px 1fr auto;
+.money-fill-card__metric-top {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 
-.money-fill-card__bar-icon {
+.money-fill-card__metric-icon {
   width: 14px;
   height: 14px;
   object-fit: contain;
-  opacity: 0.5;
+  opacity: 0.42;
+  flex-shrink: 0;
+}
+
+.money-fill-card__percent {
+  color: #8f99ab;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .money-fill-card__progress {
@@ -196,31 +278,33 @@ function clampPercent(value: number): number {
   border-radius: inherit;
 }
 
-.money-fill-card__progress-bar--orange {
-  background: #f59e0b;
-}
-
-.money-fill-card__progress-bar--green {
+.money-fill-card__progress-bar--success {
   background: #20b26b;
 }
 
-.money-fill-card__percent {
-  min-width: 34px;
-  text-align: right;
-  color: #98a1b2;
-  font-size: 13px;
-  line-height: 1;
-  font-weight: 500;
+.money-fill-card__progress-bar--warning {
+  background: #f59e0b;
+}
+
+.money-fill-card__progress-bar--danger {
+  background: #ef4444;
 }
 
 .money-fill-card__report-link {
   width: 100%;
+  min-height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #98a1b2;
+  padding: 0 8px;
+  border-radius: 10px;
+  color: #8f99ab;
   font-size: 14px;
   font-weight: 500;
+}
+
+.money-fill-card__report-link:hover {
+  background: #e9edf3;
 }
 
 .money-fill-card__report-link img {
@@ -230,9 +314,34 @@ function clampPercent(value: number): number {
   opacity: 0.45;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1100px) {
   .money-fill-card__row {
-    grid-template-columns: 1fr;
+    grid-template-columns: 104px 1fr 1fr;
+    gap: 10px;
+  }
+
+  .money-fill-card__id {
+    font-size: 14px;
+  }
+
+  .money-fill-card__percent {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 800px) {
+  .money-fill-card__row {
+    grid-template-columns: 92px 1fr 1fr;
+    gap: 8px;
+    padding: 6px 8px;
+  }
+
+  .money-fill-card__type {
+    font-size: 16px;
+  }
+
+  .money-fill-card__id {
+    font-size: 13px;
   }
 }
 </style>

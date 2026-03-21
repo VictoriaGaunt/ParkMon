@@ -36,7 +36,7 @@
 
         <svg
             class="peak-sales-card__svg"
-            viewBox="0 0 1000 240"
+            viewBox="0 0 1000 180"
             preserveAspectRatio="none"
             aria-hidden="true"
         >
@@ -139,7 +139,7 @@ const normalizedPoints = computed(() => {
 
 const linePath = computed(() => {
   const width = 1000
-  const height = 240
+  const height = 180
   const xStep = width / Math.max(days.value.length - 1, 1)
 
   const points = normalizedPoints.value.map((point, index) => {
@@ -178,7 +178,7 @@ const heatmapCells = computed<HeatmapCell[]>(() => {
 
     timeSlots.forEach((slot, slotIndex) => {
       const distance = Math.abs(slotIndex - activeSlot)
-      const intensity = Math.max(0.15, 1 - distance * 0.28)
+      const intensity = Math.max(0.18, 1 - distance * 0.22)
 
       cells.push({
         day,
@@ -219,8 +219,8 @@ function mapSlotIndexToY(slotIndex: number, chartHeight: number): number {
   const minIndex = 0
   const maxIndex = 5
   const normalized = (slotIndex - minIndex) / (maxIndex - minIndex)
-  const topPadding = 18
-  const bottomPadding = 18
+  const topPadding = 12
+  const bottomPadding = 12
   const usableHeight = chartHeight - topPadding - bottomPadding
 
   return topPadding + normalized * usableHeight
@@ -236,16 +236,16 @@ function mapSlotIndexToY(slotIndex: number, chartHeight: number): number {
 
 .peak-sales-card__chart-layout {
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 16px;
-  min-height: 240px;
+  grid-template-columns: 112px 1fr;
+  gap: 14px;
+  min-height: 190px;
 }
 
 .peak-sales-card__y-axis {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 18px 0 28px;
+  padding: 10px 0 28px;
 }
 
 .peak-sales-card__y-label {
@@ -253,12 +253,13 @@ function mapSlotIndexToY(slotIndex: number, chartHeight: number): number {
   font-size: 12px;
   line-height: 1;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .peak-sales-card__chart-area {
   position: relative;
   min-width: 0;
-  min-height: 240px;
+  min-height: 190px;
 }
 
 .peak-sales-card__grid {
@@ -327,8 +328,9 @@ function mapSlotIndexToY(slotIndex: number, chartHeight: number): number {
 
 .peak-sales-card__heatmap-cell {
   aspect-ratio: 1 / 1;
-  border-radius: 6px;
+  border-radius: 4px;
   background: #667487;
+  min-width: 0;
 }
 
 .peak-sales-card__heatmap-note {
@@ -337,13 +339,80 @@ function mapSlotIndexToY(slotIndex: number, chartHeight: number): number {
   font-weight: 500;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
+  .peak-sales-card__chart-layout {
+    grid-template-columns: 100px 1fr;
+    gap: 12px;
+    min-height: 176px;
+  }
+
+  .peak-sales-card__chart-area {
+    min-height: 176px;
+  }
+
+  .peak-sales-card__y-axis {
+    padding: 8px 0 28px;
+  }
+
+  .peak-sales-card__heatmap-grid {
+    gap: 5px;
+  }
+
+  .peak-sales-card__heatmap-cell {
+    border-radius: 3px;
+  }
+}
+
+@media (max-width: 820px) {
   .peak-sales-card__chart-layout {
     grid-template-columns: 1fr;
+    min-height: 170px;
   }
 
   .peak-sales-card__y-axis {
     display: none;
+  }
+
+  .peak-sales-card__chart-area {
+    min-height: 170px;
+  }
+
+  .peak-sales-card__heatmap-grid {
+    gap: 4px;
+  }
+
+  .peak-sales-card__heatmap-cell {
+    border-radius: 3px;
+  }
+}
+
+@media (max-width: 640px) {
+  .peak-sales-card__chart-layout {
+    min-height: 156px;
+  }
+
+  .peak-sales-card__chart-area {
+    min-height: 156px;
+  }
+
+  .peak-sales-card__line {
+    stroke-width: 3.5;
+  }
+
+  .peak-sales-card__x-label {
+    font-size: 11px;
+  }
+
+  .peak-sales-card__heatmap-grid {
+    gap: 3px;
+  }
+
+  .peak-sales-card__heatmap-cell {
+    border-radius: 2px;
+  }
+
+  .peak-sales-card__heatmap-note {
+    font-size: 12px;
   }
 }
 </style>

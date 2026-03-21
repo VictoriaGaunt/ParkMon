@@ -15,8 +15,8 @@
 
           <img
               class="overview-card__icon"
-              src="/img00.svg"
-              alt=""
+              :src="icons.arrow"
+              alt="arrow"
               aria-hidden="true"
           />
         </div>
@@ -43,6 +43,16 @@ import { computed } from 'vue'
 import BaseCard from '../ui/BaseCard.vue'
 import type { VendingMachinesOverview } from '../../types'
 import { formatNumber, formatPercent } from '../../utils'
+
+const base = import.meta.env.BASE_URL
+
+function asset(name: string): string {
+  return `${base}${name}`
+}
+
+const icons = {
+  arrow: asset('img18.png'),
+} as const
 
 interface OverviewCardItem {
   id: string
@@ -103,13 +113,13 @@ const cards = computed<OverviewCardItem[]>(() => {
 <style scoped>
 .overview-cards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 14px;
 }
 
 .overview-cards__item {
   min-width: 0;
-  border-radius: 16px;
+  border-radius: 18px;
   background: #fafafb;
 }
 
@@ -117,7 +127,7 @@ const cards = computed<OverviewCardItem[]>(() => {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  min-height: 92px;
+  min-height: 104px;
 }
 
 .overview-card__top {
@@ -138,7 +148,8 @@ const cards = computed<OverviewCardItem[]>(() => {
   width: 14px;
   height: 14px;
   object-fit: contain;
-  opacity: 0.45;
+  opacity: 0.38;
+  flex-shrink: 0;
 }
 
 .overview-card__bottom {
@@ -161,6 +172,7 @@ const cards = computed<OverviewCardItem[]>(() => {
   font-size: 14px;
   line-height: 1;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .overview-card--success .overview-card__value {
@@ -175,13 +187,81 @@ const cards = computed<OverviewCardItem[]>(() => {
   color: #b3261e;
 }
 
-@media (max-width: 1100px) {
+/* слегка ужимаем, но все еще держим 4 карточки */
+@media (max-width: 1280px) {
   .overview-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(160px, 1fr));
+    gap: 12px;
+  }
+
+  .overview-card {
+    min-height: 98px;
+  }
+
+  .overview-card__label {
+    font-size: 13px;
+  }
+
+  .overview-card__value {
+    font-size: 26px;
+  }
+
+  .overview-card__meta {
+    font-size: 13px;
   }
 }
 
-@media (max-width: 640px) {
+/* еще ужимаем, но не переходим в 2 колонки слишком рано */
+@media (max-width: 1080px) {
+  .overview-cards {
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .overview-card {
+    min-height: 92px;
+    gap: 12px;
+  }
+
+  .overview-card__label {
+    font-size: 12px;
+  }
+
+  .overview-card__value {
+    font-size: 24px;
+  }
+
+  .overview-card__meta {
+    font-size: 12px;
+  }
+}
+
+/* только теперь уходим в 2 колонки */
+@media (max-width: 860px) {
+  .overview-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .overview-card {
+    min-height: 96px;
+  }
+
+  .overview-card__label {
+    font-size: 13px;
+  }
+
+  .overview-card__value {
+    font-size: 26px;
+  }
+
+  .overview-card__meta {
+    font-size: 13px;
+  }
+}
+
+/* и только на совсем узком экране — в одну */
+@media (max-width: 520px) {
   .overview-cards {
     grid-template-columns: 1fr;
   }

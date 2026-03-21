@@ -69,6 +69,16 @@ function handleSelect(value: string) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.base-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .base-tabs--full {
@@ -82,9 +92,9 @@ function handleSelect(value: string) {
 
 .base-tabs--pill {
   padding: 4px;
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  background: #f6f7fa;
+  border: 1px solid #d6dbe5;
+  border-radius: 16px;
+  background: #eef2f7;
 }
 
 .base-tabs__item {
@@ -92,41 +102,55 @@ function handleSelect(value: string) {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  border-radius: 10px;
+  flex: 0 0 auto;
+  border-radius: 14px;
   color: #5f687c;
-  font-weight: 500;
+  font-weight: 600;
+  white-space: nowrap;
   transition:
-      background-color var(--transition-base),
-      color var(--transition-base),
-      border-color var(--transition-base);
+      background-color 0.18s ease,
+      color 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
+}
+
+.base-tabs__item:hover {
+  background: #e2e7ef;
 }
 
 .base-tabs--full .base-tabs__item {
-  flex: 1;
+  flex: 0 0 auto;
 }
 
 .base-tabs--sm .base-tabs__item {
-  min-height: 32px;
-  padding: 0 10px;
+  min-height: 34px;
+  min-width: 120px;
+  padding: 0 12px;
   font-size: 13px;
 }
 
 .base-tabs--md .base-tabs__item {
-  min-height: 38px;
-  padding: 0 14px;
+  min-height: 40px;
+  min-width: 150px;
+  padding: 0 16px;
   font-size: 15px;
 }
 
 .base-tabs--default .base-tabs__item.is-active {
-  background: #f3f4f7;
-  border: 1px solid var(--color-border);
-  color: #3b4354;
+  background: #f5f7fa;
+  border: 1px solid #d6dbe5;
+  color: #384154;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
 }
 
 .base-tabs--pill .base-tabs__item.is-active {
-  background: var(--color-bg-surface);
-  color: #3b4354;
-  box-shadow: var(--shadow-sm);
+  background: #f8f9fb;
+  color: #384154;
+  box-shadow: inset 0 0 0 1px #d6dbe5;
+}
+
+.base-tabs__label {
+  white-space: nowrap;
 }
 
 .base-tabs__badge {
@@ -140,5 +164,21 @@ function handleSelect(value: string) {
   background: rgba(0, 0, 0, 0.06);
   font-size: 11px;
   line-height: 1;
+}
+
+@media (max-width: 700px) {
+  .base-tabs--md .base-tabs__item {
+    min-height: 36px;
+    min-width: 132px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .base-tabs--sm .base-tabs__item {
+    min-height: 32px;
+    min-width: 110px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
 }
 </style>

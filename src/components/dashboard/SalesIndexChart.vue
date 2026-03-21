@@ -5,15 +5,13 @@
       padding="md"
       flat
   >
-    <template #actions>
-      <button class="sales-index-card__sort-btn" type="button" aria-label="Изменить показатель">
-        <img src="/img00.svg" alt="" />
-      </button>
-    </template>
-
-    <div class="sales-index-card__filter">
-      <button class="sales-index-card__filter-btn" type="button">
+    <div class="sales-index-card__filter-row">
+      <div class="sales-index-card__filter-label">
         Изменить показатель
+      </div>
+
+      <button class="sales-index-card__sort-btn" type="button" aria-label="Изменить показатель">
+        <img :src="icons.sort" alt="sort" />
       </button>
     </div>
 
@@ -37,7 +35,11 @@
         <div class="sales-index-card__progress">
           <div
               class="sales-index-card__progress-bar"
-              :class="`sales-index-card__progress-bar--${getProgressVariant(item.percentage)}`"
+              :class="{
+              'sales-index-card__progress-bar--danger': getProgressVariant(item.percentage) === 'danger',
+              'sales-index-card__progress-bar--warning': getProgressVariant(item.percentage) === 'warning',
+              'sales-index-card__progress-bar--success': getProgressVariant(item.percentage) === 'success',
+            }"
               :style="{ width: `${clampPercent(item.percentage)}%` }"
           ></div>
         </div>
@@ -47,7 +49,7 @@
     <template #footer>
       <button class="sales-index-card__report-link" type="button">
         <span>Перейти в отчет</span>
-        <img src="/img00.svg" alt="" />
+        <img :src="icons.arrow" alt="arrow" />
       </button>
     </template>
   </BaseCard>
@@ -58,6 +60,17 @@ import { computed } from 'vue'
 import BaseCard from '../ui/BaseCard.vue'
 import type { SalesIndex } from '../../types'
 import { formatPercent } from '../../utils'
+
+const base = import.meta.env.BASE_URL
+
+function asset(name: string): string {
+  return `${base}${name}`
+}
+
+const icons = {
+  sort: asset('img21.png'),
+  arrow: asset('img18.png'),
+} as const
 
 const props = defineProps<{
   data: SalesIndex[]
@@ -101,34 +114,49 @@ function getProgressVariant(value: number): 'danger' | 'warning' | 'success' {
   background: #fafafb;
 }
 
+.sales-index-card__sort-btn,
+.sales-index-card__report-link {
+  cursor: pointer;
+  transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease;
+}
+
+.sales-index-card__filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sales-index-card__filter-label {
+  color: #8f99ab;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
 .sales-index-card__sort-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.sales-index-card__sort-btn:hover {
+  background: #e9edf3;
 }
 
 .sales-index-card__sort-btn img {
   width: 14px;
   height: 14px;
   object-fit: contain;
-  opacity: 0.5;
-}
-
-.sales-index-card__filter {
-  margin-bottom: 12px;
-}
-
-.sales-index-card__filter-btn {
-  min-height: 30px;
-  padding: 0 12px;
-  border: 1px solid #edf0f4;
-  border-radius: 10px;
-  background: #f5f7fa;
-  color: #98a1b2;
-  font-size: 14px;
-  font-weight: 500;
+  opacity: 0.55;
 }
 
 .sales-index-card__list {
@@ -167,18 +195,18 @@ function getProgressVariant(value: number): 'danger' | 'warning' | 'success' {
 }
 
 .sales-index-card__id {
-  color: #3b4354;
+  color: #2f384c;
   font-size: 15px;
   line-height: 1.2;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .sales-index-card__percent {
   flex-shrink: 0;
-  color: #98a1b2;
+  color: #8f99ab;
   font-size: 13px;
   line-height: 1;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .sales-index-card__progress {
@@ -208,12 +236,19 @@ function getProgressVariant(value: number): 'danger' | 'warning' | 'success' {
 
 .sales-index-card__report-link {
   width: 100%;
+  min-height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #98a1b2;
+  padding: 0 8px;
+  border-radius: 10px;
+  color: #8f99ab;
   font-size: 14px;
   font-weight: 500;
+}
+
+.sales-index-card__report-link:hover {
+  background: #e9edf3;
 }
 
 .sales-index-card__report-link img {

@@ -55,10 +55,10 @@ withDefaults(
 
 <style scoped>
 .base-card {
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  background: #f8f9fb;
+  border: 1px solid #d6dbe5;
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(31, 41, 55, 0.03);
 }
 
 .base-card--flat {
@@ -142,5 +142,23 @@ withDefaults(
 
 .base-card--padding-none .base-card__footer {
   padding: 0 16px 16px;
+}
+
+@media (max-width: 700px) {
+  .base-card {
+    border-radius: 18px;
+  }
+
+  .base-card--padding-md .base-card__content {
+    padding: 14px;
+  }
+
+  .base-card__header {
+    padding: 14px 14px 0;
+  }
+
+  .base-card__footer {
+    padding: 0 14px 14px;
+  }
 }
 </style>
