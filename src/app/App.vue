@@ -43,7 +43,7 @@
           Аналитика продаж и потребительского поведения
         </h2>
 
-        <div class="dashboard-section__grid dashboard-section__grid--three">
+        <div class="dashboard-section__grid dashboard-section__grid--two-thirds">
           <SalesByMachine
               v-if="salesByMachine"
               :data="salesByMachine"
@@ -183,11 +183,27 @@ onMounted(() => {
 
 .dashboard-section__grid {
   display: grid;
-  gap: 18px;
+  gap: var(--space-lg);
+  width: 100%;
+  min-width: 0;
 }
 
 .dashboard-section__grid--three {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.dashboard-section__grid--three > * {
+  min-width: 0;
+}
+
+.dashboard-section__grid--two-thirds {
+  grid-template-columns: minmax(280px, 1fr) minmax(420px, 2fr);
+  align-items: stretch;
+}
+
+.dashboard-section__grid--two-thirds > * {
+  min-width: 0;
 }
 
 .dashboard-state {
@@ -207,6 +223,25 @@ onMounted(() => {
 }
 
 @media (max-width: 1200px) {
+  .dashboard-section__grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .dashboard-section__grid--two-thirds {
+    grid-template-columns: minmax(240px, 0.95fr) minmax(320px, 1.45fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-section__grid--two-thirds {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
   .dashboard-section__grid--three {
     grid-template-columns: 1fr;
   }
