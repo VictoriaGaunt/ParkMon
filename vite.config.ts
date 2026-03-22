@@ -11,6 +11,7 @@ const proxy = {
 
 export default defineConfig({
     plugins: [vue()],
+    base: '/parkmon/',
     server: {
         port: 5173,
         proxy,
