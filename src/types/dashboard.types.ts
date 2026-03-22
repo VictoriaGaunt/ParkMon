@@ -54,5 +54,5 @@ export interface ProductsTotalSalesOverview {
 
 export interface PeakSaleTimeAtDay {
     day: number
-    peakSalesTime: string // "HH:mm:ss" format from backend
+    peakSalesTime: string
 }
